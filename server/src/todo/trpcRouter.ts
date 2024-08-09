@@ -1,8 +1,6 @@
-import { resolve } from "path";
 import trpc from "../trpc";
 import db from "./db";
 import { z } from "zod"
-import { title } from "process";
 
 const appRouter = trpc.router({
     // *****************show todo list******************
@@ -28,11 +26,11 @@ const appRouter = trpc.router({
         return new Promise((resolve, reject) => {
             db.run(
                 'INSART INTO todos (title, issueDate, lastDateOfSubmission, isComplete)  VALUES (?, ?, ?, ?)', [title, issueDate, lastDateOfSubmission, isComplete == false],
-                function (err: any, result: any) {
+                function (err: any) {
                     if (err) {
                         reject(err.message);
                     }
-                    resolve(result.lastID)
+                    resolve({id: this.lastID})
                 }
             )
         });
@@ -55,13 +53,30 @@ const appRouter = trpc.router({
                     if (err) {
                         reject(err.message);
                     }
-                    resolve(true)
+                    resolve({changes: this.changes, isComplete})
                 }
             )
         });
-    })
+    }),
 
     // **************delete Todo****************
+    deleteTodo: trpc.procedure.input(z.object(({
+        id: z.number()
+    }))).mutation(({input})=>{
+        const {id} = input
+        return new Promise ((resolve,reject) => {
+            db.run('DELETE FROM todos WHERE id =?'),
+            [id],
+            function (err:any){
+                if (err){
+                    reject(err.message)
+                }
+                resolve({
+                    id: id,
+                })
+            }
+        })
+    })
 })
 
 
