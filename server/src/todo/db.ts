@@ -5,7 +5,7 @@ const db = new sqlite3.Database('todo.db');
 
 db.serialize(() => {
     try {
-        db.run('CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY, title TEXT, issueDate TEXT, lastDateOfSubmission TEXT, isComplete BOOlEAN)',
+        db.run('CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY, title TEXT, issueDate TEXT, lastDateOfSubmission TEXT, isComplete NUMBER)',
             function(err) {
                 if (err) {
                     console.error(err.message);
@@ -35,6 +35,13 @@ todos.forEach((todo) => {
             console.log(`Inserted row with id ${this.lastID}`);
         }
     );
+    // delete todo
+    db.run('DELETE FROM todos WHERE id=6',[todo.id], function(err){
+        if(err) {
+            console.error(err.message);
+        }
+        console.log(`Deleted row with id ${this.lastID}`);
+    })
 });
 
 export default db

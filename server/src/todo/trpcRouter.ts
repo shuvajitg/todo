@@ -3,9 +3,9 @@ import db from "./db";
 import { z } from "zod"
 
 const appRouter = trpc.router({
-    // *****************show todo list******************
-    getTodo: trpc.procedure.query(() => {
-        return new Promise((resolve, reject) => {
+    // *****************show todo list****************** \\
+    getTodo: trpc.procedure.query(async() => {
+        return await new Promise((resolve, reject) => {
             db.all('select * from todos', (error, result) => {
                 if (error) {
                     reject(error.message);
@@ -15,28 +15,29 @@ const appRouter = trpc.router({
         })
     }),
 
-    // *****************add todo list******************
+    // *****************add todo list****************** \\
     addTodo: trpc.procedure.input(z.object({
+        id: z.number(),
         title: z.string(),
         issueDate: z.string(),
         lastDateOfSubmission: z.string(),
         isComplete: z.boolean()
-    })).mutation(({ input }) => {
+    })).mutation(async({ input }) => {
         const { title, issueDate, lastDateOfSubmission, isComplete } = input
-        return new Promise((resolve, reject) => {
+        return await new Promise((resolve, reject) => {
             db.run(
-                'INSART INTO todos (title, issueDate, lastDateOfSubmission, isComplete)  VALUES (?, ?, ?, ?)', [title, issueDate, lastDateOfSubmission, isComplete == false],
-                function (err: any) {
+                'INSERT INTO todos ( title, issueDate, lastDateOfSubmission, isComplete)  VALUES (?, ?, ?, ?)', [ title, issueDate, lastDateOfSubmission, isComplete ],
+                function (err: any,result: any) {
                     if (err) {
                         reject(err.message);
                     }
-                    resolve({id: this.lastID})
+                    resolve(result);
                 }
             )
         });
     }),
 
-    // *****************update todo list******************
+    // *****************update todo list****************** \\
     updateTodo: trpc.procedure.input(z.object({
         id:z.number(),
         title: z.string(),
@@ -49,31 +50,29 @@ const appRouter = trpc.router({
             db.run(
                 'UPDATE todos SET title =?, issueDate =?, lastDateOfSubmission =?, isComplete =? WHERE id =?', 
                 [title, issueDate, lastDateOfSubmission, isComplete, id],
-                function (err: any) {
+                function (err: any,result: any) {
                     if (err) {
                         reject(err.message);
                     }
-                    resolve({changes: this.changes, isComplete})
+                    resolve(result)
                 }
             )
         });
     }),
 
-    // **************delete Todo****************
+    // *****************delete Todo******************* \\
     deleteTodo: trpc.procedure.input(z.object(({
         id: z.number()
-    }))).mutation(({input})=>{
+    }))).mutation(async({input})=>{
         const {id} = input
-        return new Promise ((resolve,reject) => {
-            db.run('DELETE FROM todos WHERE id =?'),
+        return await new Promise ((resolve,reject) => {
+            db.run('DELETE FROM todos WHERE id = ?'),
             [id],
-            function (err:any){
+            function (err:any,result:any){
                 if (err){
                     reject(err.message)
                 }
-                resolve({
-                    id: id,
-                })
+                resolve(result)
             }
         })
     })
