@@ -40,8 +40,7 @@ function Todo() {
         if (!title || !issueDate || !lastDateOfSubmission) {
             alert("Please fill all fields")
             return
-        }
-
+        } 
         addTodo.mutate({
             id,
             title,
@@ -58,28 +57,33 @@ function Todo() {
 
     const handelDelet = async (id: number) => {
         try {
-            const result = await deleteTodo.mutate({ id });
-            console.log(result, id);
+            await deleteTodo.mutate({ id });
         } catch (error) {
             console.error("Error deleting todo:", error);
         }
     };
 
-    const handelUpdate = async (todo: type) => {
-        await updateTodo.mutate({
-            id: todo.id,
-            title: title || todo.title,
-            issueDate: issueDate || todo.issueDate,
-            lastDateOfSubmission: lastDateOfSubmission || todo.lastDateOfSubmission,
-            isComplete: isComplete
-        })
 
+    const handelEdit = (todo: type) => {
+        
+        setId(todo.id)
+        setTitle(todo.title)
+        setIssueDate(todo.issueDate)
+        setLastDateOfsubmitions(todo.lastDateOfSubmission)
+        setisComplete(todo.isComplete)
     }
 
 
     return (
         <>
             <form onSubmit={handelTodo} className="flex gap-3 p-4">
+                <input 
+                className=" w-6 text-center"
+                type="number" 
+                placeholder="id"
+                value={id}
+                readOnly/>
+
                 <input
                     type="text"
                     placeholder="Title"
@@ -101,7 +105,12 @@ function Todo() {
                     onChange={(e) => setLastDateOfsubmitions(e.target.value)}
                 />
 
-                <button type="submit">Submit</button>
+                <label htmlFor="">Complite
+                    <input type="checkbox"
+                        checked={isComplete}
+                        onChange={(e) => setisComplete(e.target.checked)} />
+                </label>
+                <button type="submit">Add</button>
             </form>
             <li className="flex flex-col list-none items-center">
                 <h1 className="flex-auto mb-5">Todo List</h1>
@@ -114,7 +123,7 @@ function Todo() {
                             <p>Last Date Of Submition: {todo.lastDateOfSubmission}</p>
                             <h4>{todo.isComplete ? "true" : "false"}</h4>
                             <button onClick={() => handelDelet(todo.id)}>Delete</button>
-                            <button onClick={() => handelUpdate(todo)}>Update</button>
+                            <button onClick={() => handelEdit(todo)}>Update</button>
                         </div>
                     ))
                 }</div>

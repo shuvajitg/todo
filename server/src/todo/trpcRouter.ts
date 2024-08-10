@@ -54,8 +54,8 @@ const appRouter = trpc.router({
                     if (err) {
                         reject(err);
                     }
-                    const data = resolve({result})
-                    console.log("update",data);
+                    resolve({result})
+                    console.log("update",result);
                     
                 }
             )
@@ -75,7 +75,6 @@ const appRouter = trpc.router({
                         reject(err.message)
                     }
                     resolve({changes: result})
-                    console.log("delete",id);
                     
                 })
         })

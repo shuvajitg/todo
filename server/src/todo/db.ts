@@ -20,11 +20,11 @@ db.serialize(() => {
 
 //  inner table data
 
-// const todos = [
-//     { id: 1, title: 'Task 1', issueDate: '2022-01-01', lastDateOfSubmission: '2022-01-05', isComplete: false },
-//     { id: 2, title: 'Task 2', issueDate: '2022-01-02', lastDateOfSubmission: '2022-01-08', isComplete: true },
-//     { id: 3, title: 'Task 3', issueDate: '2022-01-03', lastDateOfSubmission: '2022-01-10', isComplete: false }
-// ]
+const todos = [
+    { id: 1, title: 'Task 1', issueDate: '2022-01-01', lastDateOfSubmission: '2022-01-05', isComplete: false },
+    { id: 2, title: 'Task 2', issueDate: '2022-01-02', lastDateOfSubmission: '2022-01-08', isComplete: true },
+    { id: 3, title: 'Task 3', issueDate: '2022-01-03', lastDateOfSubmission: '2022-01-10', isComplete: false }
+]
 
 // todos.forEach((todo) => {
 //     db.run('INSERT INTO todos (id, title, issueDate, lastDateOfSubmission, isComplete) VALUES (?,?,?,?,?)', [todo.id, todo.title, todo.issueDate, todo.lastDateOfSubmission, todo.isComplete],
@@ -41,6 +41,13 @@ db.serialize(() => {
 //             console.error(err.message);
 //         }
 //         console.log(`Deleted row with id ${this.lastID}`);
+//     })
+//     // update todo
+//     db.run('UPDATE todos SET title =?, issueDate =?, lastDateOfSubmission =?, isComplete =? WHERE id =?', ['Updated Task', '2022-01-07', '2022-08-12', true, 2], function(err){
+//         if(err) {
+//             console.error(err.message);
+//         }
+//         console.log(`Updated row with id ${this.lastID}`);
 //     })
 // });
 
