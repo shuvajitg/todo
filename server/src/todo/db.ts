@@ -20,28 +20,28 @@ db.serialize(() => {
 
 //  inner table data
 
-const todos = [
-    { id: 1, title: 'Task 1', issueDate: '2022-01-01', lastDateOfSubmission: '2022-01-05', isComplete: false },
-    { id: 2, title: 'Task 2', issueDate: '2022-01-02', lastDateOfSubmission: '2022-01-08', isComplete: true },
-    { id: 3, title: 'Task 3', issueDate: '2022-01-03', lastDateOfSubmission: '2022-01-10', isComplete: false }
-]
+// const todos = [
+//     { id: 1, title: 'Task 1', issueDate: '2022-01-01', lastDateOfSubmission: '2022-01-05', isComplete: false },
+//     { id: 2, title: 'Task 2', issueDate: '2022-01-02', lastDateOfSubmission: '2022-01-08', isComplete: true },
+//     { id: 3, title: 'Task 3', issueDate: '2022-01-03', lastDateOfSubmission: '2022-01-10', isComplete: false }
+// ]
 
-todos.forEach((todo) => {
-    db.run('INSERT INTO todos (id, title, issueDate, lastDateOfSubmission, isComplete) VALUES (?,?,?,?,?)', [todo.id, todo.title, todo.issueDate, todo.lastDateOfSubmission, todo.isComplete],
-        function(err) {
-            if (err) {
-                console.error(err.message);
-            }
-            console.log(`Inserted row with id ${this.lastID}`);
-        }
-    );
-    // delete todo
-    db.run('DELETE FROM todos WHERE id=6',[todo.id], function(err){
-        if(err) {
-            console.error(err.message);
-        }
-        console.log(`Deleted row with id ${this.lastID}`);
-    })
-});
+// todos.forEach((todo) => {
+//     db.run('INSERT INTO todos (id, title, issueDate, lastDateOfSubmission, isComplete) VALUES (?,?,?,?,?)', [todo.id, todo.title, todo.issueDate, todo.lastDateOfSubmission, todo.isComplete],
+//         function(err) {
+//             if (err) {
+//                 console.error(err.message);
+//             }
+//             console.log(`Inserted row with id ${this.lastID}`);
+//         }
+//     );
+//     // delete todo
+//     db.run('DELETE FROM todos WHERE id= 1',[todo.id], function(err){
+//         if(err) {
+//             console.error(err.message);
+//         }
+//         console.log(`Deleted row with id ${this.lastID}`);
+//     })
+// });
 
 export default db

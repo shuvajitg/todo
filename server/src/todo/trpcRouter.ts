@@ -50,11 +50,13 @@ const appRouter = trpc.router({
             db.run(
                 'UPDATE todos SET title =?, issueDate =?, lastDateOfSubmission =?, isComplete =? WHERE id =?', 
                 [title, issueDate, lastDateOfSubmission, isComplete, id],
-                function (err: any,result: any) {
+                function (err: string,result: string) {
                     if (err) {
-                        reject(err.message);
+                        reject(err);
                     }
-                    resolve(result)
+                    const data = resolve({result})
+                    console.log("update",data);
+                    
                 }
             )
         });
@@ -63,17 +65,19 @@ const appRouter = trpc.router({
     // *****************delete Todo******************* \\
     deleteTodo: trpc.procedure.input(z.object(({
         id: z.number()
-    }))).mutation(async({input})=>{
+    }))).mutation(({input})=>{
         const {id} = input
-        return await new Promise ((resolve,reject) => {
-            db.run('DELETE FROM todos WHERE id = ?'),
-            [id],
-            function (err:any,result:any){
-                if (err){
-                    reject(err.message)
-                }
-                resolve(result)
-            }
+        return new Promise ((resolve,reject) => {
+            db.run('DELETE FROM todos WHERE id = ?',
+                [id],
+                function (err:any,result:any){
+                    if (err){
+                        reject(err.message)
+                    }
+                    resolve({changes: result})
+                    console.log("delete",id);
+                    
+                })
         })
     })
 })
