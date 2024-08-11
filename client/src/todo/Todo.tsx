@@ -49,7 +49,7 @@ function Todo() {
                 lastDateOfSubmission,
                 isComplete
             })
-        }else{
+        } else {
             updateTodo.mutate({
                 id,
                 title,
@@ -57,14 +57,13 @@ function Todo() {
                 lastDateOfSubmission,
                 isComplete
             })
+            setId(0)
         }
         setId(Number)
-            setTitle('')
-            setIssueDate('')
-            setLastDateOfsubmitions('')
-            setisComplete(false)
-
-
+        setTitle('')
+        setIssueDate('')
+        setLastDateOfsubmitions('')
+        setisComplete(false)
     }
 
     const handelDelet = async (id: number) => {
@@ -75,7 +74,6 @@ function Todo() {
         }
     };
 
-
     const handelEdit = (todo: type) => {
         setId(todo.id)
         setTitle(todo.title)
@@ -83,7 +81,6 @@ function Todo() {
         setLastDateOfsubmitions(todo.lastDateOfSubmission)
         setisComplete(todo.isComplete)
     }
-
 
     return (
         <>
