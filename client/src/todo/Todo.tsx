@@ -84,54 +84,86 @@ function Todo() {
 
     return (
         <>
-            <form onSubmit={handelTodo} className="flex gap-3 p-4">
-                <input
-                    className="w-6 bg-slate-500"
-                    type="number"
-                    placeholder="id"
-                    value={id}
-                    readOnly />
+            <h1 className="text-center text-xl underline underline-offset-4 font-semibold pt-3">{id === 0 ? "Add Todo" : "Update your todo"}</h1>
+            <div className="flex justify-center">
+                <form onSubmit={handelTodo} className="flex gap-3 p-4 items-center">
+                    <input
+                        className="w-6"
+                        type="number"
+                        placeholder="id"
+                        value={id}
+                        readOnly />
 
-                <input
-                    type="text"
-                    placeholder="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
+                    <input
+                        className="bg-slate-200 h-8 w-auto rounded border border-slate-800 text-center capitalize"
+                        type="text"
+                        placeholder="Title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
 
-                <input
-                    type="date"
-                    placeholder="Issu Date"
-                    value={issueDate}
-                    onChange={(e) => setIssueDate(e.target.value)}
-                />
+                    <input
+                        className="bg-slate-200 h-8 w-auto rounded border border-slate-800 text-center uppercase"
+                        type="date"
+                        placeholder="Issu Date"
+                        value={issueDate}
+                        onChange={(e) => setIssueDate(e.target.value)}
+                    />
 
-                <input
-                    type="date"
-                    placeholder="Last Date of submition"
-                    value={lastDateOfSubmission}
-                    onChange={(e) => setLastDateOfsubmitions(e.target.value)}
-                />
+                    <input
+                        className="bg-slate-200 h-8 w-auto rounded border border-slate-800 text-center uppercase"
+                        type="date"
+                        placeholder="Last Date of submition"
+                        value={lastDateOfSubmission}
+                        onChange={(e) => setLastDateOfsubmitions(e.target.value)}
+                    />
 
-                <label htmlFor="">Complite
-                    <input type="checkbox"
-                        checked={isComplete}
-                        onChange={(e) => setisComplete(e.target.checked)} />
-                </label>
-                <button type="submit">{id === 0 ? "Add" : "Update"}</button>
-            </form>
+                    <div className="flex flex-row gap-2">
+                        <span>Complite</span>
+                        <input 
+                        type="checkbox"
+                            checked={isComplete}
+                            onChange={(e) => setisComplete(e.target.checked)} />
+                    </div>
+                    <button
+                        className={`p-2 pt-1 pb-1 rounded-md shadow-lg text-slate-100 ${id === 0 ? "bg-green-800 px-4" : "bg-indigo-800 "}`}
+                        type="submit"
+                    >{id === 0 ? "Add" : "Update"}</button>
+                </form>
+            </div>
             <li className="flex flex-col list-none items-center">
-                <h1 className="flex-auto mb-5">Todo List</h1>
-                <div>{
+                <h1 className="flex-auto mt-8 mb-2 font-extrabold text-xl">Todo List</h1>
+                <div >{
                     getTodos?.map((todo: any) => (
-                        <div key={todo.id} className="flex gap-3 mt-2">
-                            <h3>ID: {todo.id}</h3>
-                            <h3>Title: {todo.title}</h3>
-                            <p>Issu Date: {todo.issueDate}</p>
-                            <p>Last Date Of Submition: {todo.lastDateOfSubmission}</p>
-                            <h4>{todo.isComplete ? "true" : "false"}</h4>
-                            <button onClick={() => handelDelet(todo.id)}>Delete</button>
-                            <button onClick={() => handelEdit(todo)}>Update</button>
+                        <div key={todo.id} className="flex gap-3 mt-2 items-center">
+                            <h3 className="">
+                                <span className="font-bold">ID: </span>
+                                {todo.id}
+                            </h3>
+                            <h3>
+                                <span className="font-bold">Title: </span>
+                                {todo.title.toUpperCase()}
+                            </h3>
+                            <p>
+                                <span className="font-bold">Issu Date: </span>
+                                {todo.issueDate}
+                            </p>
+                            <p>
+                                <span className="font-bold">Last Date Of Submition: </span>
+                                {todo.lastDateOfSubmission}
+                            </p>
+                            <h4>
+                                <span className="font-bold">Status: </span>
+                                {todo.isComplete ? "true" : "false"}
+                            </h4>
+                            <button
+                                className="bg-red-800 p-2 pt-1 pb-1 rounded-md shadow-lg text-slate-100"
+                                onClick={() => handelDelet(todo.id)}
+                            >Delete</button>
+                            <button
+                                className="bg-indigo-800 p-2 pt-1 pb-1 rounded-md shadow-lg text-slate-100"
+                                onClick={() => handelEdit(todo)}
+                            >Update</button>
                         </div>
                     ))
                 }</div>
