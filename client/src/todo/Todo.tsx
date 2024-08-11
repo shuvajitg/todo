@@ -3,7 +3,7 @@ import { trpc } from "../trpc/trpcClient"
 
 
 function Todo() {
-    const [id, setId] = useState(Number)
+    const [id, setId] = useState<number>(0)
     const [title, setTitle] = useState('')
     const [issueDate, setIssueDate] = useState('')
     const [lastDateOfSubmission, setLastDateOfsubmitions] = useState('')
@@ -40,19 +40,31 @@ function Todo() {
         if (!title || !issueDate || !lastDateOfSubmission) {
             alert("Please fill all fields")
             return
-        } 
-        addTodo.mutate({
-            id,
-            title,
-            issueDate,
-            lastDateOfSubmission,
-            isComplete
-        })
+        }
+        if (id === 0) {
+            addTodo.mutate({
+                id,
+                title,
+                issueDate,
+                lastDateOfSubmission,
+                isComplete
+            })
+        }else{
+            updateTodo.mutate({
+                id,
+                title,
+                issueDate,
+                lastDateOfSubmission,
+                isComplete
+            })
+        }
         setId(Number)
-        setTitle('')
-        setIssueDate('')
-        setLastDateOfsubmitions('')
-        setisComplete(false)
+            setTitle('')
+            setIssueDate('')
+            setLastDateOfsubmitions('')
+            setisComplete(false)
+
+
     }
 
     const handelDelet = async (id: number) => {
@@ -65,7 +77,6 @@ function Todo() {
 
 
     const handelEdit = (todo: type) => {
-        
         setId(todo.id)
         setTitle(todo.title)
         setIssueDate(todo.issueDate)
@@ -77,12 +88,12 @@ function Todo() {
     return (
         <>
             <form onSubmit={handelTodo} className="flex gap-3 p-4">
-                <input 
-                className=" w-6 text-center"
-                type="number" 
-                placeholder="id"
-                value={id}
-                readOnly/>
+                <input
+                    className="w-6 bg-slate-500"
+                    type="number"
+                    placeholder="id"
+                    value={id}
+                    readOnly />
 
                 <input
                     type="text"
@@ -110,7 +121,7 @@ function Todo() {
                         checked={isComplete}
                         onChange={(e) => setisComplete(e.target.checked)} />
                 </label>
-                <button type="submit">Add</button>
+                <button type="submit">{id === 0 ? "Add" : "Update"}</button>
             </form>
             <li className="flex flex-col list-none items-center">
                 <h1 className="flex-auto mb-5">Todo List</h1>
