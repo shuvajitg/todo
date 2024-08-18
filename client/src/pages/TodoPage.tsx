@@ -22,8 +22,7 @@ type TodoState = {
     inProgress: TodoType[];
     done: TodoType[];
 };
-const Todo = () => {
-    const [activeCard, setActiveCard] = useState<string | null>(null); 
+const Todo = () => { 
     const { getTodoList } = getTRPCCall()
     const [todolist, setTodoList] = useState<TodoState>({
         needodo: [],
@@ -74,7 +73,7 @@ const Todo = () => {
                                 <Card
                                     className={""}
                                     todo={todo}
-                                    setactiveCard={setActiveCard}
+                                    
                                 />
                             </div>
                         ))
@@ -88,7 +87,7 @@ const Todo = () => {
                                 <Card
                                     className={""}
                                     todo={todo}
-                                    setactiveCard={setActiveCard}
+                                    
                                 />
                             </div>
                         ))
@@ -102,14 +101,13 @@ const Todo = () => {
                                 <Card
                                     className={""}
                                     todo={todo}
-                                    setactiveCard={setActiveCard}
+                                    
                                 />
                             </div>
                         ))
                     }
                 </div>
             </div>
-            <h1>Active Card - {activeCard}</h1>
         </div>
     )
 }

@@ -5,7 +5,7 @@ import { FiEdit } from "react-icons/fi";
 import dayjs from 'dayjs';
 
 
-function Card({ todo, className, setactiveCard }: {
+function Card({ todo, className }: {
     todo: {
         id: number,
         title: string,
@@ -14,7 +14,6 @@ function Card({ todo, className, setactiveCard }: {
         status: string
     };
     className?: string;
-    setactiveCard: any
 }) {
 
     const [editFrom, setIsEditFrom] = useState(false)
@@ -26,9 +25,7 @@ function Card({ todo, className, setactiveCard }: {
 
     return (
         <>
-            <div className={`${className} h-auto w-60 bg-transparent rounded-md flex flex-col mb-3 shadow-md border border-slate-200`} draggable 
-            onDragStart={() => setactiveCard(todo.id)}
-            onDragEnd={()=> setactiveCard(null)}>
+            <div className={`${className} h-auto w-60 bg-transparent rounded-md flex flex-col mb-3 shadow-md border border-slate-200`} draggable >
                 <div className="h-auto w-48 m-2 text-xs uppercase rounded-sm font-semibold">
                     {todo.title}
                 </div>
