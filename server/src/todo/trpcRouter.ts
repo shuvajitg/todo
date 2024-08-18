@@ -21,12 +21,13 @@ const appRouter = trpc.router({
         title: z.string(),
         issueDate: z.string(),
         lastDateOfSubmission: z.string(),
-        isComplete: z.boolean()
+        // isComplete: z.boolean(),
+        status: z.string()
     })).mutation(async({ input }) => {
-        const { title, issueDate, lastDateOfSubmission, isComplete } = input
+        const { title, issueDate, lastDateOfSubmission, status } = input
         return await new Promise((resolve, reject) => {
             db.run(
-                'INSERT INTO todos ( title, issueDate, lastDateOfSubmission, isComplete)  VALUES (?, ?, ?, ?)', [ title, issueDate, lastDateOfSubmission, isComplete ],
+                'INSERT INTO todos ( title, issueDate, lastDateOfSubmission, status)  VALUES (?, ?, ?, ?)', [ title, issueDate, lastDateOfSubmission, status],
                 function (err: any,result: any) {
                     if (err) {
                         reject(err.message);
@@ -43,19 +44,18 @@ const appRouter = trpc.router({
         title: z.string(),
         issueDate: z.string(),
         lastDateOfSubmission: z.string(),
-        isComplete: z.boolean()
+        status: z.string()
     })).mutation(({input})=>{
-        const { id, title, issueDate, lastDateOfSubmission, isComplete } = input
+        const { id, title, issueDate, lastDateOfSubmission,status } = input
         return new Promise((resolve, reject) => {
             db.run(
-                'UPDATE todos SET title =?, issueDate =?, lastDateOfSubmission =?, isComplete =? WHERE id =?', 
-                [title, issueDate, lastDateOfSubmission, isComplete, id],
+                'UPDATE todos SET title =?, issueDate =?, lastDateOfSubmission =?, status =? WHERE id =?', 
+                [title, issueDate, lastDateOfSubmission, status, id],
                 function (err: string,result: string) {
                     if (err) {
                         reject(err);
                     }
                     resolve({result})
-                    console.log("update",result);
                     
                 }
             )

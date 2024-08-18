@@ -1,12 +1,17 @@
-import Layout from "./todo/layout"
+
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+
+import TodoPage from "./pages/TodoPage"
 
 function App() {
 
-
+  // use router make more page 
   return (
-    <>
-      <Layout/>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<TodoPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
