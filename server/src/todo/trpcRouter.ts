@@ -11,6 +11,7 @@ const appRouter = trpc.router({
                     reject(error.message);
                 }
                 resolve(result)
+                return {success: true}
             })
         })
     }),
@@ -33,6 +34,7 @@ const appRouter = trpc.router({
                         reject(err.message);
                     }
                     resolve(result);
+                    return {success: true}
                 }
             )
         });
@@ -56,6 +58,7 @@ const appRouter = trpc.router({
                         reject(err);
                     }
                     resolve({result})
+                    return {success: true}
                     
                 }
             )
@@ -75,6 +78,7 @@ const appRouter = trpc.router({
                         reject(err.message)
                     }
                     resolve({changes: result})
+                    return {success: true}
                     
                 })
         })
