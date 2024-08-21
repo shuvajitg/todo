@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "trpc-api-export": "tsup --config trpc-api-export/builder/tsup.config.ts && npm run format-fix",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "format-fix": "prettier --config .prettierrc --write --ignore-unknown -l .",
     "start": "npx ts-node src/index.ts"
   },
   "author": "",
@@ -22,6 +24,7 @@
     "express": "^4.19.2",
     "nodemon": "^3.1.4",
     "sqlite3": "^5.1.7",
+    "tsup": "^8.2.4",
     "zod": "^3.23.8"
   }
 }

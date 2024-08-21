@@ -1,10 +1,10 @@
 import { trpc } from "../trpc/trpcClient"
 
 const getTRPCCall = ()=>{
-    const {data: todoList, refetch} = trpc.getTodo.useQuery()
+    const {data: todoList , refetch} = trpc.getTodo.useQuery()
 
     const getTodoList = ()=>{
-        return todoList
+        return todoList 
     }
 
     const addTodo = trpc.addTodo.useMutation({
